@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "ShooterCharacter.generated.h"
 
+class USpringArmComponent;
+class UCameraComponent;
+class AActorGun;
 UCLASS()
 class THIRDPERSONSHOOTER_API AShooterCharacter : public ACharacter
 {
@@ -25,5 +28,29 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+private:
+	void Shoot();
+	void BoneManip();
+	void MoveForward(float AxisValue);
+	void MoveRight(float AxisValue);
+	void Walk();
+	void UnWalk();
+	void LookUp(float AxisValue);
+	void LookRight(float AxisValue);
 
+	UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess))
+	float PlayerSpeedForward = 600.f;
+	UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess))
+	float PlayerSpeedRight = 300.f;
+	UPROPERTY(EditAnywhere)
+	float AimSensitivity = 100.f;
+	UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess))
+	USpringArmComponent* SpringArm;
+	UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess))
+	UCameraComponent* Camera;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AActorGun> GunClass;
+	UPROPERTY()
+	AActorGun* Gun;
 };
