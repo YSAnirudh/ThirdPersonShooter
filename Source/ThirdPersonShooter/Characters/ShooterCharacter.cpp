@@ -17,6 +17,8 @@ AShooterCharacter::AShooterCharacter()
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
+
+	
 }
 
 // Called when the game starts or when spawned
@@ -27,6 +29,7 @@ void AShooterCharacter::BeginPlay()
 	Gun = GetWorld()->SpawnActor<AActorGun>(GunClass);
 	BoneManip();
 	Gun->SetOwner(this);
+	Health = MaxHealth;
 }
 
 // Called every frame
@@ -47,6 +50,24 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis(TEXT("LookRight"), this, &APawn::AddControllerYawInput);
 	PlayerInputComponent->BindAction(TEXT("Shoot"), IE_Pressed, this, &AShooterCharacter::Shoot);
+}
+
+float AShooterCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) 
+{
+	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	if (Health > 0 && DamageCauser) {
+		Health -= DamageAmount;
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("%f"), Health);
+
+	if (Health <= 0) {
+		Health = 0.f;
+		// ActorDied
+		return DamageAmount;
+	}
+	return DamageAmount;
 }
 
 void AShooterCharacter::Shoot() 

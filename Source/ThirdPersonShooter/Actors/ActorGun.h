@@ -23,6 +23,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	void Shoot();
+	bool GetHitLineOfSight(FHitResult& BulletHit, FVector& InHitRotation);
 private:
 	UPROPERTY(EditAnywhere)
 	USceneComponent* Root;
@@ -30,9 +31,13 @@ private:
 	USkeletalMeshComponent* GunMesh;
 	UPROPERTY(EditAnywhere)
 	float ShootRange = 2000.f;
+	UPROPERTY(EditAnywhere)
+	UParticleSystem* MuzzleFlash;
+	UPROPERTY(EditAnywhere)
+	UParticleSystem* HitParticle;
 
 	AController* OwnerController;
 
-
-
+	UPROPERTY(EditAnywhere)
+	float BulletDamage = 50.f;
 };

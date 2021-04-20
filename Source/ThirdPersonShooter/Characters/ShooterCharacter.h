@@ -28,6 +28,7 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 private:
 	void Shoot();
 	void BoneManip();
@@ -44,6 +45,10 @@ private:
 	float PlayerSpeedRight = 300.f;
 	UPROPERTY(EditAnywhere)
 	float AimSensitivity = 100.f;
+	UPROPERTY(EditAnywhere)
+	float MaxHealth = 100.f;
+
+	float Health;
 	UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess))
 	USpringArmComponent* SpringArm;
 	UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess))
