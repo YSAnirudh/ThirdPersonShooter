@@ -18,7 +18,7 @@ AShooterCharacter::AShooterCharacter()
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
 
-	
+	ActorDead = false;
 }
 
 // Called when the game starts or when spawned
@@ -30,6 +30,11 @@ void AShooterCharacter::BeginPlay()
 	BoneManip();
 	Gun->SetOwner(this);
 	Health = MaxHealth;
+}
+
+bool AShooterCharacter::IsDead() const
+{
+	return ActorDead;
 }
 
 // Called every frame
@@ -56,7 +61,7 @@ float AShooterCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 {
 	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
-	if (Health > 0 && DamageCauser) {
+	if (Health > 0 && !ActorDead) {
 		Health -= DamageAmount;
 	}
 
@@ -64,7 +69,7 @@ float AShooterCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 
 	if (Health <= 0) {
 		Health = 0.f;
-		// ActorDied
+		ActorDead = true;
 		return DamageAmount;
 	}
 	return DamageAmount;

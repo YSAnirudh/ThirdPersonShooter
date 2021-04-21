@@ -38,16 +38,18 @@ void AActorGun::Tick(float DeltaTime)
 void AActorGun::Shoot() 
 {
 	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, GunMesh, TEXT("MuzzleFlashSocket"));
+	// Sound
 	FHitResult BulletHit;
 	FVector InHitRotation;
 	bool bHit = GetHitLineOfSight(BulletHit, InHitRotation);
 	if (bHit) {
 		AActor* ActorThatIsHit = BulletHit.GetActor();
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitParticle, BulletHit.Location, InHitRotation.Rotation());
+		// Sound
 		FPointDamageEvent DamageEvent(BulletDamage, BulletHit, InHitRotation, NULL);
 		ActorThatIsHit->TakeDamage(BulletDamage, DamageEvent, OwnerController, this);
 	}
-	DrawDebugPoint(GetWorld(),BulletHit.Location , 10.f, FColor::Blue, true, 10.f);
+	//DrawDebugPoint(GetWorld(),BulletHit.Location , 10.f, FColor::Blue, true, 10.f);
 	//DrawDebugCamera(GetWorld(), Location, Rotation, 90, 10.f, FColor::Red, true);
 }
 

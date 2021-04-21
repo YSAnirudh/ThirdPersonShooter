@@ -17,11 +17,12 @@ class THIRDPERSONSHOOTER_API AShooterCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AShooterCharacter();
+	UFUNCTION(BlueprintCallable)
+	bool IsDead() const;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -47,6 +48,10 @@ private:
 	float AimSensitivity = 100.f;
 	UPROPERTY(EditAnywhere)
 	float MaxHealth = 100.f;
+	UPROPERTY()
+	bool ActorDead = false;
+
+
 
 	float Health;
 	UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess))
