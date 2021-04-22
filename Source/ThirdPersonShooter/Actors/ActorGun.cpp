@@ -49,6 +49,7 @@ void AActorGun::Shoot()
 		FPointDamageEvent DamageEvent(BulletDamage, BulletHit, InHitRotation, NULL);
 		ActorThatIsHit->TakeDamage(BulletDamage, DamageEvent, OwnerController, this);
 	}
+	
 	//DrawDebugPoint(GetWorld(),BulletHit.Location , 10.f, FColor::Blue, true, 10.f);
 	//DrawDebugCamera(GetWorld(), Location, Rotation, 90, 10.f, FColor::Red, true);
 }
@@ -65,6 +66,8 @@ bool AActorGun::GetHitLineOfSight(FHitResult& BulletHit, FVector& InHitRotation)
 	InHitRotation = -Rotation.Vector();
 	FVector HitEnd = Location + Rotation.Vector() * ShootRange;
 	FCollisionQueryParams CollisionParams;
+	CollisionParams.AddIgnoredActor(this);
+	CollisionParams.AddIgnoredActor(GetOwner());
 	return GetWorld()->LineTraceSingleByChannel(
 		OUT BulletHit,
 		Location,

@@ -12,7 +12,8 @@ void AAIControllerShooter::BeginPlay()
     PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
     if (EnemyAIBehavior != nullptr) {
         RunBehaviorTree(EnemyAIBehavior);
-        GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), PlayerPawn->GetActorLocation());
+        GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownLocation"), PlayerPawn->GetActorLocation());
+        GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
     }
 }
 
