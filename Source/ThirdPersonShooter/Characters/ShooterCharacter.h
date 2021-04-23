@@ -48,8 +48,6 @@ private:
 	float AimSensitivity = 100.f;
 	UPROPERTY(EditAnywhere)
 	float MaxHealth = 100.f;
-	UPROPERTY()
-	bool ActorDead = false;
 
 
 

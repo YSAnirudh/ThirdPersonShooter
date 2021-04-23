@@ -6,6 +6,8 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "../Actors/ActorGun.h"
+#include "Components/CapsuleComponent.h"
+
 // Sets default values
 AShooterCharacter::AShooterCharacter()
 {
@@ -17,8 +19,6 @@ AShooterCharacter::AShooterCharacter()
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
-
-	ActorDead = false;
 }
 
 // Called when the game starts or when spawned
@@ -34,7 +34,7 @@ void AShooterCharacter::BeginPlay()
 
 bool AShooterCharacter::IsDead() const
 {
-	return ActorDead;
+	return Health <= 0;
 }
 
 // Called every frame
@@ -61,16 +61,16 @@ float AShooterCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 {
 	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
-	if (Health > 0 && !ActorDead) {
+	if (Health > DamageAmount) {
 		Health -= DamageAmount;
 	}
+	else {
+		Health = 0.0f;
+	}
 
-	UE_LOG(LogTemp, Warning, TEXT("%f"), Health);
-
-	if (Health <= 0) {
-		Health = 0.f;
-		ActorDead = true;
-		return DamageAmount;
+	if (IsDead()) {
+		DetachFromControllerPendingDestroy();
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
 	return DamageAmount;
 }

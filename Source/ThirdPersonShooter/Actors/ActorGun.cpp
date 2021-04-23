@@ -33,8 +33,6 @@ void AActorGun::Tick(float DeltaTime)
 
 }
 
-
-
 void AActorGun::Shoot() 
 {
 	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, GunMesh, TEXT("MuzzleFlashSocket"));
