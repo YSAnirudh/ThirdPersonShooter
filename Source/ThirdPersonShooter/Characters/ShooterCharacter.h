@@ -17,7 +17,7 @@ class THIRDPERSONSHOOTER_API AShooterCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AShooterCharacter();
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintPure)
 	bool IsDead() const;
 
 protected:
@@ -50,7 +50,7 @@ private:
 	float MaxHealth = 100.f;
 
 
-
+	UPROPERTY(BlueprintReadOnly, meta=(AllowPrivateAccess))
 	float Health;
 	UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess))
 	USpringArmComponent* SpringArm;

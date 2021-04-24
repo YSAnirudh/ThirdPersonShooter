@@ -7,6 +7,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "../Actors/ActorGun.h"
 #include "Components/CapsuleComponent.h"
+#include "../ThirdPersonShooterGameModeBase.h"
 
 // Sets default values
 AShooterCharacter::AShooterCharacter()
@@ -69,8 +70,12 @@ float AShooterCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 	}
 
 	if (IsDead()) {
-		DetachFromControllerPendingDestroy();
 		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		AThirdPersonShooterGameModeBase* GameMode = GetWorld()->GetAuthGameMode<AThirdPersonShooterGameModeBase>();
+		if (GameMode != nullptr) {
+			GameMode->PawnKilled(this);
+		}
+		DetachFromControllerPendingDestroy();
 	}
 	return DamageAmount;
 }

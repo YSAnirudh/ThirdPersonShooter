@@ -12,7 +12,9 @@
 UCLASS()
 class THIRDPERSONSHOOTER_API AThirdPersonShooterGameModeBase : public AGameModeBase
 {
-	GENERATED_BODY()	
-private:
+	GENERATED_BODY()
+public:	
 	virtual void PawnKilled(APawn* PawnKilled);
+private:
+	void EndGame(bool PlayerWon);
 };

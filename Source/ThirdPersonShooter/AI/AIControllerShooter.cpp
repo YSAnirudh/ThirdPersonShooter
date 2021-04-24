@@ -21,3 +21,12 @@ void AAIControllerShooter::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
 }
+
+bool AAIControllerShooter::IsDead() const
+{
+    AShooterCharacter* Enemy = Cast<AShooterCharacter>(GetPawn());
+    if (Enemy != nullptr) {
+        return Enemy->IsDead();
+    }
+    return false;
+}
