@@ -31,11 +31,17 @@ void AShooterCharacter::BeginPlay()
 	BoneManip();
 	Gun->SetOwner(this);
 	Health = MaxHealth;
+	H=Health;
 }
 
 bool AShooterCharacter::IsDead() const
 {
 	return Health <= 0;
+}
+
+float AShooterCharacter::GetHealth() const
+{
+	return H / MaxHealth;
 }
 
 // Called every frame
@@ -68,7 +74,7 @@ float AShooterCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 	else {
 		Health = 0.0f;
 	}
-
+	H = Health;
 	if (IsDead()) {
 		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		AThirdPersonShooterGameModeBase* GameMode = GetWorld()->GetAuthGameMode<AThirdPersonShooterGameModeBase>();

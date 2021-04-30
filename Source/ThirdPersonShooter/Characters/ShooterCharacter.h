@@ -19,6 +19,8 @@ public:
 	AShooterCharacter();
 	UFUNCTION(BlueprintPure)
 	bool IsDead() const;
+	UFUNCTION(BlueprintPure)
+	float GetHealth() const;
 
 protected:
 	// Called when the game starts or when spawned
@@ -52,6 +54,7 @@ private:
 
 	UPROPERTY(BlueprintReadOnly, meta=(AllowPrivateAccess))
 	float Health;
+	float H;
 	UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess))
 	USpringArmComponent* SpringArm;
 	UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess))
